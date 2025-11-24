@@ -19,6 +19,6 @@ const verificarId = (req, res, next) => {
     
 };
 
-export default {
+export {
     verificarId
 }

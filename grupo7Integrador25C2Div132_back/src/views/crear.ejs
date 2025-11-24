@@ -1,0 +1,37 @@
+<%- include("partials/head.ejs") %>
+<%- include("partials/nav.ejs") %>
+
+<main>
+    <h1> <%= about %> </h1>
+
+    <form id="altaProductos-formulario" class="productos-formulario-amplio">
+
+        <label for="nombreProducto">Nombre</label>
+        <input type="text" name="nombre" id="nombreProd" required>
+        <br>
+
+        <label for="imageProducto">Imagen</label>
+        <input type="text" name="img_url" id="imageProducto" required>
+        <br>
+
+        <label for="categoriaProducto">Categoria</label>
+        <select name="tipo" id="categoriaProducto" required>
+            <option value="FIGURITAS">Figuritas</option>
+            <option value="ACCESORIOS">Accesorios</option>
+        </select>
+        <br>
+
+        <label for="precioProducto">Precio</label>
+        <input type="number" name="precio" id="precioProducto" required>
+        <br>
+
+        <input type="submit" value="Crear producto">
+    </form>
+
+    <hr>
+    <div id="contenedor-productos"></div>
+</main>
+
+<script src="js/crear.js"></script>
+
+<%- include("partials/footer.ejs") %>

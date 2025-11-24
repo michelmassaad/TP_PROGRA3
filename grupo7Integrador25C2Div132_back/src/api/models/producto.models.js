@@ -28,18 +28,37 @@ const insertarProducto = (nombre, img_url, tipo, precio) => {
 };
 
 
+// Modificar producto
+const actualizarProducto = (nombre, img_url, tipo, precio, activo, id) => {
+    let sql = `
+        UPDATE productos
+        SET nombre = ?, img_url = ?, tipo = ?, precio = ?, activo = ?
+        WHERE id = ?
+    `;
+
+    return connection.query(sql, [nombre, img_url, tipo, precio, activo, id]); // Estos valores en orden reemplazan a los placeholders -> ?
+}
 
 
+// Eliminar producto
+const borrarProducto = (id) => {
+     // Opcion 1: Hacer el borrado normal
+     let sql = `DELETE FROM productos WHERE id = ?`;
 
+     // Opcion 2: Baja logica
+    //  let sql2 = `UPDATE productos SET activo = 0 WHERE id = ?`;
 
-
+     return connection.query(sql, [id]);
+}
 
 
 
 export default {
     seleccionarProductos,
     seleccionarProductoPorId,
-    insertarProducto
+    insertarProducto,
+    actualizarProducto,
+    borrarProducto
 };
 
 // exportamos la conexion y la respuesta de cada peticion a los controladores
