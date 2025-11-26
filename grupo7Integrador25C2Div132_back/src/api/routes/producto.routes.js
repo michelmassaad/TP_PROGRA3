@@ -8,10 +8,13 @@ Sirve para revisar, modificar o validar la información que llega
 antes de que llegue al controlador final.
 */
 import { verificarId } from "../middlewares/middlewares.js";
-import{ crearProducto, eliminarProducto, getProductoPorId, getProductos, modificarProducto } from "../controllers/producto.controllers.js";
+import{ crearProducto, eliminarProducto, getProductoPorId, getProductos, modificarProducto, getProductosActivos } from "../controllers/producto.controllers.js";
 
 // Get => obtener todos los productos
 router.get("/", getProductos);
+
+//GET => obtener productos activos
+router.get("/activos", getProductosActivos);
 
 // Get product by id => consultar producto por id
 router.get("/:id", verificarId, getProductoPorId);
@@ -21,7 +24,6 @@ router.post("/", crearProducto);
 
 // PUT-> Modificar producto
 router.put("/", modificarProducto);
-
 
 // DELETE-> Eliminar producto
 router.delete("/:id", verificarId, eliminarProducto);

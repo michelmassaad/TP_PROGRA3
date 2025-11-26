@@ -11,6 +11,13 @@ const seleccionarProductos = () => {   // pasamos la sentencia sql en una consta
     return connection.query(sql);
 };
 
+// traer productos activos
+const seleccionarProductosActivos = () => {   // pasamos la sentencia sql en una constante separada del endpoint para modularizar y tenerla aparte en caso de tener que usarla mas adelante
+    const sql = "SELECT * FROM productos WHERE productos.activo = 1";
+
+    return connection.query(sql);
+};
+
 
 // traer producto por id
 const seleccionarProductoPorId = (id) => {
@@ -43,18 +50,19 @@ const actualizarProducto = (nombre, img_url, tipo, precio, activo, id) => {
 // Eliminar producto
 const borrarProducto = (id) => {
      // Opcion 1: Hacer el borrado normal
-     let sql = `DELETE FROM productos WHERE id = ?`;
+    let sql = `DELETE FROM productos WHERE id = ?`;
 
      // Opcion 2: Baja logica
     //  let sql2 = `UPDATE productos SET activo = 0 WHERE id = ?`;
 
-     return connection.query(sql, [id]);
+    return connection.query(sql, [id]);
 }
 
 
 
 export default {
     seleccionarProductos,
+    seleccionarProductosActivos,
     seleccionarProductoPorId,
     insertarProducto,
     actualizarProducto,

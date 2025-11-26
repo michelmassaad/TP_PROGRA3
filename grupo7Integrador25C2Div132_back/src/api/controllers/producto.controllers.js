@@ -22,7 +22,27 @@ export const getProductos = async (req, res) => { // peticion para puerto/produc
             message: "Error interno al obtener productos"
         });
     }
-}
+};
+
+// GET => obtener productos activos
+export const getProductosActivos = async (req, res) => { // peticion para puerto/productos
+    try{
+        const [rows] = await ProductoModelo.seleccionarProductosActivos();  // ProductoModelo es un alias para acceder a las funciones y variables de models
+        console.log("error")
+        
+        res.status(200).json({
+            payload: rows,
+            message: rows.length === 0 ? "No se encontraron productos" : "Productos encontrados" // con el placeholders devuelve una rta o la otra
+        });
+        // 
+    }catch(error) {
+        // console.error("Error obteniendo productos", error.message);
+
+        res.status(500).json({
+            message: "Error interno al obtener productos"
+        });
+    }
+};
 
 // Get product by id => consultar producto por id
 export const getProductoPorId = async (req, res) => {

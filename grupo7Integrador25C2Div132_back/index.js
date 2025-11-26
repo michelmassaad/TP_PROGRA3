@@ -52,7 +52,7 @@ app.get("/admin", async (req, res) => {
 app.get("/consultar", (req, res) => {
     res.render("consultar", {
         title: "Consultar",
-        about: "Consultar producto por id:"
+        about: "Consultar producto por id"
     });
 });
 

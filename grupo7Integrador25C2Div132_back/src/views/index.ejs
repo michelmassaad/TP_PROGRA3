@@ -3,16 +3,19 @@
 
 <main>
     <h1> <%= about %> </h1>
-    <hr>
     <div id="contenedor-productos">
 
         <!-- Vamos a iterar el array de productos que le pasamos desde el endpoint -->
         <% productos.forEach(producto => { %>
-            <div class="card-producto">
-                <img src="<%= producto.img_url %>" alt="<%= producto.nombre %>">
-                <h5><%= producto.nombre %></h5>
-                <p>Id: <%= producto.id %></p>
-                <p>$<%= producto.precio %></p>
+            <div class="carta-producto">
+                <div class="carta-imagen">
+                    <img src="<%= producto.img_url %>" alt="<%= producto.nombre %>">
+                </div>
+                <div class="carta-texto">
+                    <h5><%= producto.nombre %></h5>
+                    <p>Id: <%= producto.id %></p>
+                    <p>$<%= producto.precio %></p>
+                </div>
             </div>
         <% }) %>
 

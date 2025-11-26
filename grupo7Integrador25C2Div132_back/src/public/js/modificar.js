@@ -81,13 +81,22 @@ function crearFormularioPut(event, producto) {
             <input type="number" name="precio" id="precioProducto" value="${producto.precio}" required>
             <br>
 
-            <input type="hidden" name="activo" value="${producto.activo}">
+            <label for="productoActivo">Activo</label>
+            <select name="activo" id="productoActivo" required>
+                <option value="1">Con Stock</option>
+                <option value="0">Sin Stock</option>
+            </select>
+            <br>
 
             <input type="submit" value="Actualizar producto">
         </form>
     `;
 
     contenedor_formulario.innerHTML = formularioPutHtml;
+
+    document.getElementById("categoriaProducto").value = producto.tipo; // traemos los valores actualizados de la bdd
+    
+    document.getElementById("productoActivo").value = producto.activo;
 
     let actualizarProductos_formulario = document.getElementById("actualizarProductos-formulario");
 
