@@ -35,11 +35,21 @@ getProductos_formulario.addEventListener("submit", async (event) => {
 function mostrarProducto(producto) {
     let htmlProducto = `
         <li class="li-listados">
-            <img src="${producto.img_url}" alt="${producto.nombre}" class="img-listados">
-            <p>Id: ${producto.id}/ Nombre: ${producto.nombre}/ <strong>Precio: $${producto.precio}</strong></p>
+            <div class="carta-producto">
+                <div class="carta-imagen">
+                    <img src="${producto.img_url}" alt="${producto.nombre}">
+                </div>
+                <div class="carta-texto">
+                    <h5>${producto.nombre}</h5>
+                    <div class="carta-id-precio">
+                        <p>Id: ${producto.id}</p>
+                        <p>$${producto.precio}</p>
+                    </div>
+                </div>
+            </div>
         </li>
         <li class="li-botonera">
-            <input type="button" id="actualizarProducto_boton" value="Actualizar producto">
+            <input class="boton" type="button" id="actualizarProducto_boton" value="Actualizar producto">
         </li>
         `;
 
@@ -60,35 +70,35 @@ function crearFormularioPut(event, producto) {
     let formularioPutHtml = `
         <form id="actualizarProductos-formulario" class="productos-formulario-amplio">
 
-            <input type="hidden" name="id" value="${producto.id}">
+            <input class="input-formulario" type="hidden" name="id" value="${producto.id}">
 
-            <label for="nombreProducto">Nombre</label>
-            <input type="text" name="nombre" id="nombreProducto" value="${producto.nombre}" required>
+            <label class="texto-id" for="nombreProducto">Nombre</label>
+            <input class="input-formulario" type="text" name="nombre" id="nombreProducto" value="${producto.nombre}" required>
             <br>
 
-            <label for="imagenProducto">Imagen</label>
-            <input type="text" name="img_url" id="imagenProducto" value="${producto.img_url}" required>
+            <label class="texto-id" class="texto-id" for="imagenProducto">Imagen</label>
+            <input class="input-formulario" type="text" name="img_url" id="imagenProducto" value="${producto.img_url}" required>
             <br>
 
-            <label for="categoriaProducto">Categoria</label>
-            <select name="tipo" id="categoriaProducto" required>
+            <label class="texto-id" for="categoriaProducto">Categoria</label>
+            <select class="input-formulario" name="tipo" id="categoriaProducto" required>
                 <option value="FIGURITAS">Figuritas</option>
                 <option value="ACCESORIOS">Accesorios</option>
             </select>
             <br>
 
-            <label for="precioProducto">Precio</label>
-            <input type="number" name="precio" id="precioProducto" value="${producto.precio}" required>
+            <label class="texto-id" for="precioProducto">Precio</label>
+            <input class="input-formulario" type="number" name="precio" id="precioProducto" value="${producto.precio}" required>
             <br>
 
-            <label for="productoActivo">Activo</label>
-            <select name="activo" id="productoActivo" required>
+            <label class="texto-id" for="productoActivo">Activo</label>
+            <select class="input-formulario" name="activo" id="productoActivo" required>
                 <option value="1">Con Stock</option>
                 <option value="0">Sin Stock</option>
             </select>
             <br>
 
-            <input type="submit" value="Actualizar producto">
+            <input class="boton" type="submit" value="Actualizar producto">
         </form>
     `;
 

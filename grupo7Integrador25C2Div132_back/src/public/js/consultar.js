@@ -45,14 +45,23 @@ getProductos_formulario.addEventListener("submit", async (event) => {
 function mostrarProducto(producto) {
     let htmlProducto = `
         <li class="li-listados">
-            <img src="${producto.img_url}" alt="${producto.nombre}" class="img-listados">
-            <p>Id: ${producto.id}/ Nombre: ${producto.nombre}/ <strong>Precio: $${producto.precio}</strong></p>
+            <div class="carta-producto">
+                <div class="carta-imagen">
+                    <img src="${producto.img_url}" alt="${producto.nombre}">
+                </div>
+                <div class="carta-texto">
+                    <h5>${producto.nombre}</h5>
+                    <div class="carta-id-precio">
+                        <p>Id: ${producto.id}</p>
+                        <p>$${producto.precio}</p>
+                    </div>
+                </div>
+            </div>
         </li>
         `;
 
     listado_productos.innerHTML = htmlProducto;
 }
-
 
 function mostrarError(message) {
     listado_productos.innerHTML = `
