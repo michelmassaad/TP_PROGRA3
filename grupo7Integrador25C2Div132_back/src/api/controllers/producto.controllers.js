@@ -28,7 +28,6 @@ export const getProductos = async (req, res) => { // peticion para puerto/produc
 export const getProductosActivos = async (req, res) => { // peticion para puerto/productos
     try{
         const [rows] = await ProductoModelo.seleccionarProductosActivos();  // ProductoModelo es un alias para acceder a las funciones y variables de models
-        console.log("error")
         
         res.status(200).json({
             payload: rows,

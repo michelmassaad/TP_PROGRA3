@@ -24,7 +24,7 @@ getProductos_formulario.addEventListener("submit", async (event) => {
         // Extraigo el producto que devuelve payload
         let producto = datos.payload[0]; // Apuntamos a la respuesta, vamos a payload que trae el array con el objeto y extraemos el primer y unico elemento
 
-        // Le pasamos el producto a una funcion que lo renderice en la pantalla
+        // Le pasamos el producto a una funcion que lo renderice en la pantalla        
         mostrarProducto(producto); 
 
     } catch (error) {
@@ -37,7 +37,7 @@ function mostrarProducto(producto) {
         <li class="li-listados">
             <div class="carta-producto">
                 <div class="carta-imagen">
-                    <img src="${producto.img_url}" alt="${producto.nombre}">
+                    <img src='${producto.img_url}' alt='${producto.nombre}'>
                 </div>
                 <div class="carta-texto">
                     <h5>${producto.nombre}</h5>
@@ -54,11 +54,16 @@ function mostrarProducto(producto) {
         `;
 
     listado_productos.innerHTML = htmlProducto;
-
+    
     let actualizarProducto_boton = document.getElementById("actualizarProducto_boton");
+    contenedor_formulario.classList.add('esconder'); //agrega una clase para el formulario
 
     actualizarProducto_boton.addEventListener("click", event => {
+        
+        actualizarProducto_boton.classList.add('esconder'); //agrega una clase para el esconder el boton
+
         crearFormularioPut(event, producto);
+        contenedor_formulario.classList.remove('esconder'); //elimina la clase que esconde el formulario
     });
 }
 
@@ -68,16 +73,16 @@ function crearFormularioPut(event, producto) {
     event.stopPropagation(); // Evitamos la propagacion de eventos
 
     let formularioPutHtml = `
-        <form id="actualizarProductos-formulario" class="productos-formulario-amplio">
+        <form id="actualizarProductos-formulario" class="productos-formulario productos-formulario-modificar">
 
-            <input class="input-formulario" type="hidden" name="id" value="${producto.id}">
+            <input class="input-formulario" type="hidden" name="id" value='${producto.id}'>
 
             <label class="texto-id" for="nombreProducto">Nombre</label>
-            <input class="input-formulario" type="text" name="nombre" id="nombreProducto" value="${producto.nombre}" required>
+            <input class="input-formulario" type="text" name="nombre" id="nombreProducto" value='${producto.nombre}' required>
             <br>
 
             <label class="texto-id" class="texto-id" for="imagenProducto">Imagen</label>
-            <input class="input-formulario" type="text" name="img_url" id="imagenProducto" value="${producto.img_url}" required>
+            <input class="input-formulario" type="text" name="img_url" id="imagenProducto" value='${producto.img_url}' required>
             <br>
 
             <label class="texto-id" for="categoriaProducto">Categoria</label>
@@ -88,7 +93,7 @@ function crearFormularioPut(event, producto) {
             <br>
 
             <label class="texto-id" for="precioProducto">Precio</label>
-            <input class="input-formulario" type="number" name="precio" id="precioProducto" value="${producto.precio}" required>
+            <input class="input-formulario" type="number" name="precio" id="precioProducto" value='${producto.precio}' required>
             <br>
 
             <label class="texto-id" for="productoActivo">Activo</label>
@@ -101,7 +106,7 @@ function crearFormularioPut(event, producto) {
             <input class="boton" type="submit" value="Actualizar producto">
         </form>
     `;
-
+    contenedor_formulario.classList.add('estilo-formulario'); //agrega una clase para el estilo del formulario
     contenedor_formulario.innerHTML = formularioPutHtml;
 
     document.getElementById("categoriaProducto").value = producto.tipo; // traemos los valores actualizados de la bdd
