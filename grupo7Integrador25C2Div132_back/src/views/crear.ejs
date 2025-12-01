@@ -29,7 +29,22 @@
     </form>
 
     <hr>
-    <div id="contenedor-productos"></div>
+    
+    <h1>Alta Usuario</h1>
+
+    <!-- Formulario para crear usuarios y enviarlos a api/usuarios  -->
+    <form id="altaUsuarios-formulario" class="productos-formulario-amplio">
+        <label class="texto-id" for="correoUsuario">Correo</label>
+        <input class="input-formulario" type="email" name="correo" id="correoUsario" required>
+        <br>
+
+        <label class="texto-id" for="passwordUsuario">Password</label>
+        <input class="input-formulario" type="password" name="password" id="passwordUsuario" required>
+        <br>
+
+        <input class="boton" type="submit" value="Crear Usuario">
+    </form>
+
 </main>
 
 <script src="js/crear.js"></script>

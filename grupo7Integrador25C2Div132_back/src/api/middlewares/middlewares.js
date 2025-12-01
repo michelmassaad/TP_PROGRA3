@@ -19,6 +19,17 @@ const verificarId = (req, res, next) => {
     
 };
 
+// Middleware de ruta, para proteger las vistas si no se hizo login
+const exigirLogin = (req, res, next) => {
+
+    if(!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    next(); // Sin next, la peticion nunca llega a la respuesta (res)
+}
+
 export {
-    verificarId
+    verificarId,
+    exigirLogin
 }
