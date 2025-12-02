@@ -3,18 +3,6 @@
 /*================
     General
 ================*/
-/* 
-ul {
-    padding-left: 0;
-}
-
-li {
-    list-style-type: none;
-} */
-/* html{
-    height: 100%;
-} */
-
 body {
     height: 100%;
     background-image: 
@@ -54,7 +42,6 @@ body {
     align-items: center;
     width: 20%;
 
-    /* Estilo Glassmorphism */
     background: rgba(255, 255, 255, 0.1); /* Fondo oscuro semitransparente */
     backdrop-filter: blur(5px);           /* Desenfoque del fondo */
     border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
@@ -86,7 +73,7 @@ body {
 /* 5. EFECTO DE BRILLO AL HACER CLICK */
 /* El truco ':focus-within' hace que el PADRE brille cuando tocas el HIJO */
 .nav-bar:focus-within {
-    border-color: #51b1a3;               /* Borde Cyan */
+    border-color: #51b1a3;            
     box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); /* Resplandor neón */
     background: rgba(0, 0, 0, 0.4);      /* Se oscurece un poco el fondo */
     transform: scale(1.02);              /* Se agranda un poquito */
@@ -153,7 +140,7 @@ body {
 }
 
 .carrito a:hover{
-    border-color: #51b1a3;               /* Borde Cyan */
+    border-color: #51b1a3;             
     box-shadow: 0 0 15px rgba(0, 210, 255, 0.8); /* Resplandor neón */
     /* background: rgba(0, 0, 0, 0.4);       */
     transform: scale(1.05);
@@ -161,6 +148,55 @@ body {
 
 .carrito svg{
     margin-right: 5px;
+}
+
+.boton-perfil {
+    display: flex;              /* Para alinear ícono y texto */
+    align-items: center;        /* Centrado vertical */
+    
+    background-color: #101623;  /* Color de fondo oscuro (azul noche) */
+    border: 1px solid #2d3748;  /* Borde finito y sutil */
+    border-radius: 5px;        /* Bordes totalmente redondeados */
+    padding: 5px 10px;
+    
+    background: rgba(255, 255, 255, 0.1); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(5px);           /* Desenfoque del fondo */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+    
+    color: white;               /* Color del texto */
+    font-size: 15px;
+    cursor: pointer;            /* Manito al pasar el mouse */
+
+    margin-right: 15px;
+}
+
+.texto-usuario{
+        /* 1. Evita que el texto baje a otra línea */
+    white-space: nowrap; 
+    
+    /* 2. Oculta lo que se sale del botón */
+    overflow: hidden; 
+    
+    /* 3. Agrega los tres puntitos (...) al final */
+    text-overflow: ellipsis; 
+    
+    /* Importante: Dale un ancho máximo para que sepa cuándo cortar */
+    max-width: 120px; /* Ajusta este número según tu diseño */
+    text-transform: capitalize;
+}
+
+/* Estilo del ícono (El muñequito) */
+.icono-usuario {
+    width: 20px;
+    height: 20px;
+    color: #51b1a3; /* El color celeste/cyan del ícono */
+}
+
+/* Efecto Hover (Cuando pasas el mouse) */
+.boton-perfil:hover {
+    border-color: #51b1a3;             
+    /* background: rgba(0, 0, 0, 0.4);       */
+    transform: scale(1.05);
 }
 
 /*================
@@ -353,6 +389,101 @@ select#categoriaProducto, #productoActivo {
     width: 31%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 } */
+
+.main-bienvenida{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.body-bienvenida{
+    min-height: 90vh; /*Esto define que el body ocupe TODA la altura de la pantalla*/
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-bienvenida a{
+    font-size: 40px !important;
+}
+.logo-bienvenida .color-cyan{
+    text-shadow: none;
+}
+
+.login-contenedor {
+    background: rgba(30, 41, 59, 0.80); /* Fondo semitransparente */
+    backdrop-filter: blur(12px);         /* Efecto vidrio esmerilado */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 40%;
+}
+
+/* Título h2 */
+.login-contenedor h2 {
+    text-align: center;
+    font-size: 1.1rem;
+    color: white;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#inputNombre {
+    width: 100%;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+    text-align: center;
+    outline: none;
+    transition: 0.3s;
+    box-sizing: border-box; /* Para que el padding no rompa el ancho*/
+    text-transform: capitalize;
+}
+
+#inputNombre::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#inputNombre:focus {
+    border-color: #51b1a3;            
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); /* Resplandor neón */
+    background: rgba(0, 0, 0, 0.4);      /* Se oscurece un poco el fondo */
+    transform: scale(1.02);              /* Se agranda un poquito */
+}
+
+/* --- 5. El Botón (Etiqueta button dentro de .login-contenedor) --- */
+.login-contenedor button {
+    width: 100%;
+    padding: 15px;
+    color: #0f172a;
+    font-weight: 800;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    background: white; 
+}
+
+.login-contenedor button:hover {
+    background: #51b1a3;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); /* Resplandor neón */
+    transform: translateY(-2px);
+}
 
 .botonAgregarCarrito{
     /* padding: 4px;

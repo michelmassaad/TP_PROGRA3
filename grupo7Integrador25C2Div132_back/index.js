@@ -4,14 +4,10 @@ import environments from "./src/api/config/environments.js";
 import cors from "cors"; 
 // Importamos las rutas de producto
 import { productoRoutes, usuarioRoutes } from "./src/api/routes/index.js";
-
 import productoModels from "./src/api/models/producto.models.js";
 
 // Importamos la configuracion para trabajar con rutas y archivos estaticos
 import { join, __dirname } from "./src/api/utils/index.js";
-
-// Importamos session_key de environments
-const session_key = environments.session_key;
 
 import session from "express-session"; // Importamos session despues de instalar npm i express-session
 import { exigirLogin } from "./src/api/middlewares/middlewares.js";
@@ -19,6 +15,8 @@ import connection from "./src/api/database/db.js";
 import bcrypt from "bcrypt";
 
 const PORT = environments.port;
+// Importamos session_key de environments
+const session_key = environments.session_key;
 
 /*===================
     Middlewares

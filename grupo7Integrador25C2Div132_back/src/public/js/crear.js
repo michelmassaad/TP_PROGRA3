@@ -15,20 +15,21 @@ altaProductos_formulario.addEventListener("submit", event => {
 
 async function enviarProducto(data) {
     try {
-        let response = await fetch(`${url}/api/productos`, {
-            method: "POST",
+        let response = await fetch(`${url}/api/productos`, { //hacemos una peticion a productos
+            method: "POST", //enviamos los datos con el metodo post
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json" //avisamos que el body va en json
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data) // data es un objeto en Js que lo convertimos en Json 
         });
 
-        // Procesamos la respuesta que nos devuelve
+        // Procesamos la respuesta que nos devuelve y la convertimos en json 
         let result = await response.json();
 
         // Vamos a verificar si la conexion fue exitosa con un "200" OK o "201" Created
         if(response.ok) {
             alert(result.message);
+            document.getElementById("altaProductos-formulario").reset(); //resetea los inputs del formulario 
 
         } else { // En caso de que haya otra respuesta distinta de ok
             alert(result.message);
@@ -42,11 +43,11 @@ async function enviarProducto(data) {
 
 //alta usuarios
 altaUsuarios_formulario.addEventListener("submit", event => {
-    event.preventDefault();
+    event.preventDefault(); // Evitamos el envio por defecto del formulario
 
-    let formData = new FormData(event.target);
+    let formData = new FormData(event.target); //Obtenemos la data del formulario en un FormData
 
-    let data = Object.fromEntries(formData.entries());
+    let data = Object.fromEntries(formData.entries()); // Parseamos esta data del form data en un objeto JS
 
     enviarUsuario(data);
 })
@@ -57,13 +58,13 @@ async function enviarUsuario(data) {
 
     try {
         // let url = "http://localhost:3000/api/usuarios"
-        let response = await fetch(`${url}/api/usuarios`, 
+        let response = await fetch(`${url}/api/usuarios`, //hacemos una peticion a usuarios
             {
-            method: "POST",
+            method: "POST", //enviamos los datos con el metodo post
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json" //avisamos que el body va en json
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data) // data es un objeto en Js que lo convertimos en Json 
         });
         // Procesamos la respuesta que nos devuelve
         let result = await response.json();
@@ -71,6 +72,7 @@ async function enviarUsuario(data) {
         // Vamos a verificar si la conexion fue exitosa con un "200" OK o "201" Created
         if(response.ok) {
             alert(result.message);
+            document.getElementById("altaUsuarios-formulario").reset(); //resetea los inputs del formulario 
 
         } else { // En caso de que haya otra respuesta distinta de ok
             alert(result.message);
