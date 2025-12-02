@@ -57,9 +57,9 @@ function protegerRuta() {
         window.location.href = "bienvenida.html"; 
     }
 }
-protegerRuta();
 
 function init (){
+    protegerRuta();
     mostrarNombreUsuario();
     cargarCarritoDeStorage();
 }

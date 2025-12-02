@@ -214,7 +214,7 @@ h1{
 
 }
 
-/*Botones filtrado*/
+/* /Botones filtrado/ */
 .filtros{
     display: flex;
     justify-content: center;
@@ -273,15 +273,20 @@ h1{
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.carta-carrito{
+    height: auto !important;
+    flex-direction: row !important;
+    width: 300px;
+}
+.carta-id-precio-carrito{
+    flex-direction: column-reverse !important;
+}
+
 .carta-producto:hover, .boton:hover{
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     border-color: #ccc;
     transform: scale(1.05);
 }
-
-/* .boton:hover {
-    background-color: #ccc;
-} */
 
 #contenedor-productos h5, #contenedor-productos p {
     margin: 0;
@@ -333,6 +338,7 @@ h1{
     flex-direction: column;
 }
 
+
 .carta-id-precio {
     display: flex;
     justify-content: space-around;
@@ -341,13 +347,6 @@ h1{
     font-size: 17px;
 }
 
-
-/* #listado-productos {
-    width: 100%;
-    display: flex;
-    font-size: 14px;
-    justify-content: space-between;
-} */
 
 .li-listados {
     display: flex;
@@ -361,34 +360,6 @@ h1{
     margin-bottom: 0;
 }
 
-/* .li-botonera {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-} */
-
-/* .texto-id {
-    color: white;
-    font-size: 17px;
-    display: flex;
-    justify-content: center;
-}
-
-#idProd {
-    width: 10%;
-    margin-top: 7px;
-}
-
-.input-formulario {
-    width: 30%;
-    margin-top: 7px;
-}
-
-select#categoriaProducto, #productoActivo {
-    height: 22px;
-    width: 31%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-} */
 
 .main-bienvenida{
     display:flex;
@@ -399,7 +370,7 @@ select#categoriaProducto, #productoActivo {
 }
 
 .body-bienvenida{
-    min-height: 90vh; /*Esto define que el body ocupe TODA la altura de la pantalla*/
+    min-height: 90vh; /*/Esto define que el body ocupe TODA la altura de la pantalla/ */
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -485,6 +456,20 @@ select#categoriaProducto, #productoActivo {
     transform: translateY(-2px);
 }
 
+#contenedor-carrito{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-carrito{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .botonAgregarCarrito{
     /* padding: 4px;
     border-radius: 5px;
@@ -509,6 +494,60 @@ select#categoriaProducto, #productoActivo {
     transform: scale(1.05);
 }
 
+.carrito-final {
+    display: flex;
+    flex-direction: column-reverse;
+    color: white;
+    align-items: center;
+    font-size: xx-large;
+    font-family: monospace;
+    margin-bottom: 50px;
+}
+
+.boton-vaciar-carrito {
+    padding: 10px 20px;
+}
+
+.carrito-vacio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    border-radius: 15px;
+    font-size: 15px;
+    padding: 20px;
+    backdrop-filter: blur(1px);
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    background-color: #333;
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.carrito-vacio a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: #333;
+    border: 1px solid;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.carrito-vacio a:hover {
+    background-color: #51b1a3; /* Tu color turquesa */
+    color: black;
+    border: 0;
+
+    font-weight: bold;
+}
+
 .mensaje-error strong {
     color: #ae4f4e;
 }
@@ -521,4 +560,3 @@ select#categoriaProducto, #productoActivo {
     border-radius: 4px;
     font-size: 16px;
 }
-

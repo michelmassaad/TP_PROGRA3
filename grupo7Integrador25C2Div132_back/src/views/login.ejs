@@ -10,17 +10,17 @@
 <% } %>
 
 <!-- Ahora los datos no los enviamos con fetch, sino con <form> -> Necesitamos parsear estos datos (no json) en nuestra aplicacion-->
-<form id="login-formulario" class="login-formulario" action="/login" method="POST" autocomplete="off">
+<form id="login-formulario" class="productos-formulario-amplio" action="/login" method="POST" autocomplete="off">
 
-    <label for="emailUsuario">Email</label>
-    <input type="email" name="correo" id="emailUsuario" required>
+    <label class="texto-id" for="emailUsuario">Email</label>
+    <input class="input-formulario" type="email" name="correo" id="emailUsuario" required>
 
-    <label for="passwordUsuario">Password</label>
-    <input type="password" name="password" id="passwordUsuario" required>
+    <label class="texto-id" for="passwordUsuario">Password</label>
+    <input class="input-formulario" type="password" name="password" id="passwordUsuario" required>
     
     <div class="botones-login">
-        <input type="submit" class="boton-login" value="Login">
-        <input type="button" id="acceso" class="boton-login" value="Acceso rápido">
+        <input class="boton" type="submit" value="Login">
+        <input class="boton" type="button" id="acceso" value="Acceso rápido">
     </div>
 </form>
 

@@ -37,8 +37,10 @@ body {
     Encabezado
 ================*/
 nav{
+    display: flex;
     position: fixed;
     padding-top: 30px;
+    align-items: center;
     top: 0;
     width: 100%;
     z-index: 1000;
@@ -199,6 +201,7 @@ h1{
     font-size: 17px;
     display: flex;
     justify-content: center;
+    margin-top: 18px;
 }
 
 #idProd, #idProducto {
@@ -233,13 +236,6 @@ select#categoriaProducto, #productoActivo {
 .boton:hover{
     background-color: #ccc;
 }
-
-/* .boton:hover{
-    background-color: #ccc;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border-color: #ccc;
-    transform: scale(1.05); 
-} */
 
 .productos-formulario {
     margin-bottom: 30px;
