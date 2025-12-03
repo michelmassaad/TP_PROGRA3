@@ -37,6 +37,7 @@ body {
     Encabezado
 ================*/
 nav{
+    display: flex;
     position: fixed;
     top: 0;
     width: 100%;
@@ -249,13 +250,6 @@ select#categoriaProducto, #productoActivo {
     background-color: #ff4d4d; /* Rojo al pasar el mouse */
     color: white;
 }
-
-/* .boton:hover{
-    background-color: #ccc;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border-color: #ccc;
-    transform: scale(1.05); 
-} */
 
 .productos-formulario {
     margin-bottom: 30px;
