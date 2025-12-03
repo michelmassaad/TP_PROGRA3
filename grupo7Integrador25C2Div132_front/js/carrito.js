@@ -1,11 +1,11 @@
 let contenedorCarrito = document.getElementById("contenedor-carrito");
 
-//Logica de Carrito
 function mostrarCarrito(){
-    let cartaCarrito = ""; // inicializamos una lista para los productos seleccionados y se muestra el titulo carrito
     
+    let cartaCarrito = "";
+
     if (carrito.length === 0) {
-        contenedorCarrito.innerHTML = `<div class="carrito-vacio"><h3>Aún no has agregado jugadores ni sobres a tu carrito!!</h3> <a href="productos.html">Ver Productos...</a></div>`;
+        contenedorCarrito.innerHTML = `<div class="carrito-vacio"><h2>Tu carrito está vacío!!</h2> <a href="productos.html">Ver Productos..</a></div>`; // innerHTML convierte un string en HTML
         return;
     }
 
@@ -29,10 +29,9 @@ function mostrarCarrito(){
     });
 
                         // captura el evento al apretar el boton de vaciar  carrito y ejecuta la funcion
-    cartaCarrito += `</ul><div class="carrito-final"> <button class="botonAgregarCarrito boton-vaciar-carrito" onclick='vaciarCarrito()'> Vaciar carrito </button> 
-                    <p class= "precio-total-carrito">Total:  $ ${calcularTotalPrecioCarrito()}</p></div>`;
-    contenedorCarrito.innerHTML = cartaCarrito; // innerHTML convierte un string en HTML
-    // console.table(carrito);
+    cartaCarrito += `</ul> <p class= "precio-total-carrito">Total:  $ ${calcularTotalPrecioCarrito()}</p> <div class="carrito-final"> <button class="botonAgregarCarrito boton-vaciar-carrito" onclick='vaciarCarrito()'> Vaciar carrito </button> <button class="botonAgregarCarrito boton-ticket" onclick='imprimirTicket()'> Imprimir ticket </button></div>`; 
+    
+    contenedorCarrito.innerHTML = cartaCarrito;
 }
 
 function eliminarProducto(indice){
@@ -48,7 +47,6 @@ function eliminarProducto(indice){
 
 function vaciarCarrito(){
     carrito = []; // se vuelve a asignar un array vacio
-    
     mostrarCarrito();
     //guarda el carrito en la memoria de la sesion 
     guardarCarritoEnStorage();
@@ -66,6 +64,102 @@ function calcularTotalPrecioCarrito() {
 
 };
 
+function imprimirTicket(){
+    console.table(carrito);
+    let confirmarCompra = confirm("Confirmar compra??");
+
+    if (!confirmarCompra) {
+        window.location.href = "carrito.html";
+    } else {
+
+        let idProductos = []; // guardamos los ids de los productos del carrito para registrar ventas
+    
+        const nombreCliente = sessionStorage.getItem("usuario")
+        
+        // Primera mayúscula + resto en minúscula
+        nombreGuardado = nombreCliente.charAt(0).toUpperCase() + nombreCliente.slice(1).toLowerCase();
+
+        const { jsPDF } = window.jspdf;
+    
+        const doc = new jsPDF(); // doc tendra todos los metodos de jsPDF
+        
+        let y = 20; 
+    
+        doc.setFontSize(20);
+    
+        doc.text("                          Figu-ticket de compra" , 20, y);
+    
+        y += 15;
+
+        // --- AQUÍ AGREGAMOS EL NOMBRE ---
+        doc.setFontSize(12);
+        doc.text(`Cliente: ${nombreGuardado}`, 20, y);
+        doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, y + 6);
+
+        y += 5;
+
+        doc.text("-------------------------------------------------------------------------------------------------------------------------", 20, y + 10);
+        
+        y += 20; // Dejamos un espacio antes de los productos
+    
+        doc.setFontSize(12);
+    
+        carrito.forEach(producto => {
+    
+            idProductos.push(producto.id); // llenamos el array de ids de productos
+    
+            doc.text(`${producto.nombre} - $${producto.precio}`, 40, y); // texto por cada producto
+    
+            y += 10;
+        });
+        
+        doc.text("-------------------------------------------------------------------------------------------------------------------------", 20, y + 10);
+        y += 25
+        const precioTotal = carrito.reduce((total, producto) => total + parseInt(producto.precio), 0); // calculamos el total del ticket
+    
+
+    
+        doc.setFontSize(15);
+    
+        doc.text(`Total: $${precioTotal}`, 20, y);
+
+        y += 50;
+        doc.text("                                     --- Gracias por su compra!!! ---", 20, y);
+
+        y+= 10;
+        doc.text("                                                 Figurita Tienda", 20, y)
+    
+    
+    
+        doc.save("ticket.pdf");
+
+        alert("Compra exitosa!!!");
+        // sessionStorage.removeItem("usuario");
+        sessionStorage.removeItem("carrito");
+        window.location.href = "productos.html";
+    
+        registrarVenta(precioTotal, idProductos);
+    };
+    
+}
+
+function registrarVenta(precioTotal, idProductos) {
+    
+    const fecha = new Date()
+    .toLocaleString("sv-SE", { hour12: false })  
+    .replace("T", " "); // formato de fecha valido para sql horario buenos aires
+
+    const data = {
+        date: fecha,
+        total_precio: precioTotal,
+        nombre: nombre_usuario,
+        productos: idProductos
+    };
+
+
+
+
+}
 
 function init (){
     mostrarCarrito();
