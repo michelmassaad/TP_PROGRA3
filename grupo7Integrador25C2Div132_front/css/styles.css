@@ -125,7 +125,7 @@ body {
 #cantidadCarritoTexto {
     margin: auto 0;
     margin-left: 5px;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .carrito a{
@@ -164,8 +164,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
     
     color: white;               /* Color del texto */
-    font-size: 15px;
-    cursor: pointer;            /* Manito al pasar el mouse */
+    /* font-size: 15px; */
+    /* cursor: pointer;            Manito al pasar el mouse */
 
     margin-right: 15px;
 }
@@ -187,8 +187,8 @@ body {
 
 /* Estilo del ícono (El muñequito) */
 .icono-usuario {
-    width: 20px;
-    height: 20px;
+    width: 23px;
+    height: 28px;
     color: #51b1a3; /* El color celeste/cyan del ícono */
 }
 
@@ -197,6 +197,24 @@ body {
     border-color: #51b1a3;             
     /* background: rgba(0, 0, 0, 0.4);       */
     transform: scale(1.05);
+}
+
+.boton-salir{
+    background: rgba(255, 255, 255, 0.1); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(5px);           /* Desenfoque del fondo */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+    border-radius: 5px;        /* Bordes totalmente redondeados */
+    
+    color: white;               /* Color del texto */
+    cursor: pointer;            /* Manito al pasar el mouse */
+
+    margin-right: 5px;
+}
+.boton-salir:hover{
+    border-color: #a94442;
+    transform: scale(1.05);
+    /* color: #a94442; */
+
 }
 
 /*================
@@ -214,7 +232,7 @@ h1{
 
 }
 
-/*Botones filtrado*/
+/* /Botones filtrado/ */
 .filtros{
     display: flex;
     justify-content: center;
@@ -273,15 +291,20 @@ h1{
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.carta-carrito{
+    height: auto !important;
+    flex-direction: row !important;
+    width: 300px;
+}
+.carta-id-precio-carrito{
+    flex-direction: column-reverse !important;
+}
+
 .carta-producto:hover, .boton:hover{
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     border-color: #ccc;
     transform: scale(1.05);
 }
-
-/* .boton:hover {
-    background-color: #ccc;
-} */
 
 #contenedor-productos h5, #contenedor-productos p {
     margin: 0;
@@ -333,6 +356,7 @@ h1{
     flex-direction: column;
 }
 
+
 .carta-id-precio {
     display: flex;
     justify-content: space-around;
@@ -341,13 +365,6 @@ h1{
     font-size: 17px;
 }
 
-
-/* #listado-productos {
-    width: 100%;
-    display: flex;
-    font-size: 14px;
-    justify-content: space-between;
-} */
 
 .li-listados {
     display: flex;
@@ -361,34 +378,6 @@ h1{
     margin-bottom: 0;
 }
 
-/* .li-botonera {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-} */
-
-/* .texto-id {
-    color: white;
-    font-size: 17px;
-    display: flex;
-    justify-content: center;
-}
-
-#idProd {
-    width: 10%;
-    margin-top: 7px;
-}
-
-.input-formulario {
-    width: 30%;
-    margin-top: 7px;
-}
-
-select#categoriaProducto, #productoActivo {
-    height: 22px;
-    width: 31%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-} */
 
 .main-bienvenida{
     display:flex;
@@ -399,7 +388,7 @@ select#categoriaProducto, #productoActivo {
 }
 
 .body-bienvenida{
-    min-height: 90vh; /*Esto define que el body ocupe TODA la altura de la pantalla*/
+    min-height: 90vh; /*/Esto define que el body ocupe TODA la altura de la pantalla/ */
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -485,6 +474,20 @@ select#categoriaProducto, #productoActivo {
     transform: translateY(-2px);
 }
 
+#contenedor-carrito{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-carrito{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .botonAgregarCarrito{
     /* padding: 4px;
     border-radius: 5px;
@@ -509,16 +512,75 @@ select#categoriaProducto, #productoActivo {
     transform: scale(1.05);
 }
 
+.carrito-final {
+    display: flex;
+    flex-direction: column-reverse;
+    color: white;
+    align-items: center;
+    font-size: xx-large;
+    font-family: monospace;
+    margin-bottom: 50px;
+}
+
+.boton-vaciar-carrito {
+    padding: 10px 20px;
+}
+
+.carrito-vacio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    border-radius: 15px;
+    font-size: 15px;
+    padding: 20px;
+    backdrop-filter: blur(1px);
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    background-color: #1a1a1a;  /* Color de fondo oscuro (azul noche) */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.carrito-vacio a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: #101623;  /* Color de fondo oscuro (azul noche) */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #51b1a3; /* Tu color turquesa */
+    color: black;
+    font-weight: bold;
+
+}
+
+.carrito-vacio a:hover {
+    border: 0;
+    color: black;
+    font-weight: bold;
+    border-color: #51b1a3;             
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.2); /* Resplandor neón */
+    /* background: rgba(0, 0, 0, 0.4);       */
+    transform: scale(1.05);
+}
+
 .mensaje-error strong {
-    color: #ae4f4e;
+    color: #ff4646;
 }
 
 .mensaje-error {
-    color: #a94442;
-    background-color: #f2dede;
-    border: 2px solid #ebccd1;
-    padding: 10px 30px;
-    border-radius: 4px;
-    font-size: 16px;
+    color: #ff4646;
+    margin-top: 20px;
+    background-color: #1a1a1a;
+    border: 1px solid #ff4646;
+    /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); */
+    
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-size: 18px;
 }
-

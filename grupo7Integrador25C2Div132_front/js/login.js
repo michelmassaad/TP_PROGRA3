@@ -20,6 +20,7 @@ function iniciarSesion() {
 }
 
 // verificacion si ya existe un usuario redirigue a productos si se intenta ingresar en bienvenida.html
+const usuarioLogueado = sessionStorage.getItem("usuario");
 if (usuarioLogueado) {
     window.location.href = "productos.html";
 }

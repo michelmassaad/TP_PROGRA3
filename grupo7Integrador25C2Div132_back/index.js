@@ -100,7 +100,7 @@ app.get("/eliminar", exigirLogin, (req, res) => {
 app.get("/login", (req,res) =>{
     res.render("login",{
         title:"Login",
-        about:"Login dashboard"
+        about:"Inicio de Sesion"
     })    
 })    
 
@@ -112,7 +112,7 @@ app.post("/login", async(req, res) =>{
         if(!correo || !password){
             return res.render("login",{
                 title: "Login",
-                about: "Login dashboard",
+                about: "Inicio de Sesion",
                 error: "Todos los campos son obligatorios"
             });
         }
@@ -131,7 +131,7 @@ app.post("/login", async(req, res) =>{
         if (rows.length === 0) {
             return res.render("login",{
                 title: "Login",
-                about: "Login dashboard",
+                about: "Inicio de Sesion",
                 error: "Credenciales incorrectas"
             });
         }
@@ -153,7 +153,7 @@ app.post("/login", async(req, res) =>{
         }else{
             return res.render("login",{
                 title: "Login",
-                about: "Login dashboard",
+                about: "Inicio de Sesion",
                 error: "Password incorrecta"
             });
         }

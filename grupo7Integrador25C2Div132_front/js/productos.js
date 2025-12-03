@@ -73,8 +73,15 @@ function filtrarProductos(){
     prod.nombre devuelve cada nombre de cada objeto
     prod.nombre.includes verifica si lo que esta adentro de includes existe dentro del valor busqueda
     */
-
-    mostrarProductos(productosFiltrados);
+    
+    // Verificacion de busqueda
+    if (productosFiltrados.length > 0) {
+        // si encontro Mostramos los productos normalmente
+        mostrarProductos(productosFiltrados);
+    } else {
+        // SI NO SE ENCONTRÓ: Ejecutamos la función de error
+        mostrarError("No hemos encontramos ese producto");
+    }
 };
 
 //Logica de Filtros
@@ -128,6 +135,16 @@ function agregarACarrito(id){
     alert("Producto agregado al carrito correctamente")
 }
 
+function mostrarError(message) {
+    contenedorProductos.innerHTML = `
+        <div class="mensaje-error">
+            <p>
+                <strong>Error:</strong>
+                <span>${message}</span>
+            </p>
+        </div>
+    `;
+};
 
 //Inicializamos la tienda 
 function init (){

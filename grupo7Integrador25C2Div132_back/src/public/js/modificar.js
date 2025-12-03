@@ -21,11 +21,16 @@ getProductos_formulario.addEventListener("submit", async (event) => {
         // Proceso los datos que me devuelve el servidor
         let datos = await response.json();
 
-        // Extraigo el producto que devuelve payload
-        let producto = datos.payload[0]; // Apuntamos a la respuesta, vamos a payload que trae el array con el objeto y extraemos el primer y unico elemento
+        if(response.ok) {
+            let producto = datos.payload[0]; //extraemos el primer y unico elemento
 
-        // Le pasamos el producto a una funcion que lo renderice en la pantalla        
-        mostrarProducto(producto); 
+            // Le pasamos el producto a una funcion que lo renderice en la pantalla
+            mostrarProducto(producto); 
+
+        } else {
+            mostrarError(datos.message);
+        }
+
 
     } catch (error) {
         console.error("Error: ", error);
@@ -156,4 +161,15 @@ async function actualizarProducto(event) {
         alert("Error al procesar la solicitud");
     }
 
+};
+
+function mostrarError(message) {
+    listado_productos.innerHTML = `
+        <li class="mensaje-error">
+            <p>
+                <strong>Error:</strong>
+                <span>${message}</span>
+            </p>
+        </li>
+    `;
 };

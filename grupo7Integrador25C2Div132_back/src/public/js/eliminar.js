@@ -19,9 +19,15 @@ getProductos_formulario.addEventListener("submit", async (event) => {
 
         let datos = await response.json();
 
-        let producto = datos.payload[0]; //extraemos el primer y unico elemento
+        if(response.ok) {
+            let producto = datos.payload[0]; //extraemos el primer y unico elemento
 
-        mostrarProducto(producto); 
+            // Le pasamos el producto a una funcion que lo renderice en la pantalla
+            mostrarProducto(producto); 
+
+        } else {
+            mostrarError(datos.message);
+        }
 
     } catch (error) {
         console.error("Error: ", error);
@@ -90,3 +96,15 @@ async function eliminarProducto(id) {
         alert("Ocurrio un error al eliminar un producto");
     }
 }
+
+
+function mostrarError(message) {
+    listado_productos.innerHTML = `
+        <li class="mensaje-error">
+            <p>
+                <strong>Error:</strong>
+                <span>${message}</span>
+            </p>
+        </li>
+    `;
+};

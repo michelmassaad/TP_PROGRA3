@@ -1,9 +1,9 @@
 <%- include("partials/head.ejs") %>
 <%- include("partials/nav.ejs") %>
 
-<main>
+<main class="main-crear">
+    <div class="recuadro formulario">
     <h1> <%= about %> </h1>
-
     <form id="altaProductos-formulario" class="productos-formulario-amplio">
 
         <label class="texto-id" for="nombreProducto">Nombre</label>
@@ -27,9 +27,9 @@
 
         <input class="boton" type="submit" value="Crear producto">
     </form>
-
+    </div>
     <hr>
-    
+    <div class="recuadro formulario">
     <h1>Alta Usuario</h1>
 
     <!-- Formulario para crear usuarios y enviarlos a api/usuarios  -->
@@ -39,12 +39,12 @@
         <br>
 
         <label class="texto-id" for="passwordUsuario">Password</label>
-        <input class="input-formulario" type="password" name="password" id="passwordUsuario" required>
+        <input class="input-formulario" type="password" name="password" id="passwordUsuario" autocomplete="off" required>
         <br>
 
         <input class="boton" type="submit" value="Crear Usuario">
     </form>
-
+    </div>
 </main>
 
 <script src="js/crear.js"></script>

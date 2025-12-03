@@ -38,12 +38,16 @@ body {
 ================*/
 nav{
     position: fixed;
-    padding-top: 30px;
     top: 0;
     width: 100%;
     z-index: 1000;
+    padding-top: 20px;
     background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 nav ul {
     display: flex;
     justify-content: space-between;
@@ -63,7 +67,9 @@ nav li:hover{
     font-weight: bold;
     transform: scale(1.10); 
 }
-
+form#logout {
+    padding-bottom: 20px;
+}
 
 /*================
     main
@@ -71,8 +77,8 @@ nav li:hover{
 h1{
     display: flex;
     justify-content: center;
-    padding-top: 40px;
-    padding-bottom: 30px;
+    padding-top: 65px;
+    padding-bottom: 20px;
     margin: 0px;
     color: white;
 }
@@ -199,6 +205,7 @@ h1{
     font-size: 17px;
     display: flex;
     justify-content: center;
+    margin-top: 18px;
 }
 
 #idProd, #idProducto {
@@ -228,10 +235,19 @@ select#categoriaProducto, #productoActivo {
     cursor: pointer;
     border: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+    /* font-weight: bold; */
+    background-color: white;
 }
 
 .boton:hover{
     background-color: #ccc;
+    border: 0;
+}
+
+.boton-salir:hover {
+    background-color: #ff4d4d; /* Rojo al pasar el mouse */
+    color: white;
 }
 
 /* .boton:hover{
@@ -243,7 +259,7 @@ select#categoriaProducto, #productoActivo {
 
 .productos-formulario {
     margin-bottom: 30px;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -259,10 +275,18 @@ select#categoriaProducto, #productoActivo {
     display: flex;
     align-items: center;
     width: 100%;
-    width: 25%;
+    width: 50%;
     margin: auto;
     flex-direction: column;
     color: white;
+}
+
+.login-formulario{
+    width: 30% !important;
+}
+
+.botones-login {
+    display: flex;
 }
 
 .estilo-formulario{
@@ -274,19 +298,37 @@ select#categoriaProducto, #productoActivo {
 }
 
 .mensaje-error strong {
+    font-weight: bold;
     color: #ae4f4e;
 }
 
 .mensaje-error {
     color: #a94442;
+    font-weight: bold;
     background-color: #f2dede;
     border: 2px solid #ebccd1;
     padding: 10px 30px;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
+}
+
+.div-mensaje-error{
+    margin-top: 15px ;
+    display: flex;
+    justify-content: center;
 }
 
 .contenedor-modificar{
     display: flex;
     
 }
+
+
+.main-crear{
+    display: flex;
+}
+
+.recuadro.formulario{
+    width: 100%;
+}
+
