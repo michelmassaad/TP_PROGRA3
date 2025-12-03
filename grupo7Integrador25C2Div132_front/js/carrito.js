@@ -29,8 +29,7 @@ function mostrarCarrito(){
     });
 
                         // captura el evento al apretar el boton de vaciar  carrito y ejecuta la funcion
-    cartaCarrito += `</ul><div class="carrito-final"> <button class="botonAgregarCarrito boton-vaciar-carrito" onclick='vaciarCarrito()'> Vaciar carrito </button> 
-                    <p class= "precio-total-carrito">Total:  $ ${calcularTotalPrecioCarrito()}</p></div>`; 
+    cartaCarrito += `</ul> <p class= "precio-total-carrito">Total:  $ ${calcularTotalPrecioCarrito()}</p> <div class="carrito-final"> <button class="botonAgregarCarrito boton-vaciar-carrito" onclick='vaciarCarrito()'> Vaciar carrito </button> <button class="botonAgregarCarrito boton-ticket" onclick='imprimirTicket()'> Imprimir ticket </button></div>`; 
     
     contenedorCarrito.innerHTML = cartaCarrito;
 }
@@ -64,6 +63,47 @@ function calcularTotalPrecioCarrito() {
     return total;
 
 };
+
+function imprimirTicket(){
+    console.table(carrito);
+
+    let idProductos = []; // guardamos los ids de los productos del carrito para registrar ventas
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF(); // doc tendra todos los metodos de jsPDF
+
+    let y = 20; 
+
+    doc.setFontSize(20);
+
+    doc.text("Ticket de compra:" , 20, y);
+
+    y += 20;
+
+    doc.setFontSize(12);
+
+    carrito.forEach(producto => {
+
+        idProductos.push(producto.id); // llenamos el array de ids de productos
+
+        doc.text(`${producto.nombre} - $${producto.precio}`, 40, y); // texto por cada producto
+
+        y += 10;
+    });
+
+    const precioTotal = carrito.reduce((total, producto) => total + parseInt(producto.precio), 0); // calculamos el total del ticket
+
+    y += 5
+
+    doc.setFontSize(15);
+
+    doc.text(`Total: $${precioTotal}`, 20, y);
+
+
+
+    doc.save("ticket.pdf");
+}
 
 
 function init (){

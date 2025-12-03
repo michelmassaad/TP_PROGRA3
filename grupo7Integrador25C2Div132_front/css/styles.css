@@ -496,16 +496,26 @@ h1{
 
 .carrito-final {
     display: flex;
-    flex-direction: column-reverse;
+    /* flex-direction: column-reverse;
     color: white;
     align-items: center;
     font-size: xx-large;
-    font-family: monospace;
+    font-family: monospace; */
     margin-bottom: 50px;
+    justify-content: space-around;
 }
 
 .boton-vaciar-carrito {
     padding: 10px 20px;
+}
+
+.precio-total-carrito {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: xx-large;
+    font-family: monospace;
+    font-weight: bold;
 }
 
 .carrito-vacio{
