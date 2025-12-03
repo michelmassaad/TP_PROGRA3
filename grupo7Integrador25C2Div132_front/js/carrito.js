@@ -66,45 +66,100 @@ function calcularTotalPrecioCarrito() {
 
 function imprimirTicket(){
     console.table(carrito);
+    let confirmarCompra = confirm("Confirmar compra??");
 
-    let idProductos = []; // guardamos los ids de los productos del carrito para registrar ventas
+    if (!confirmarCompra) {
+        window.location.href = "carrito.html";
+    } else {
 
-    const { jsPDF } = window.jspdf;
+        let idProductos = []; // guardamos los ids de los productos del carrito para registrar ventas
+    
+        const nombreCliente = sessionStorage.getItem("usuario")
+        
+        // Primera mayúscula + resto en minúscula
+        nombreGuardado = nombreCliente.charAt(0).toUpperCase() + nombreCliente.slice(1).toLowerCase();
 
-    const doc = new jsPDF(); // doc tendra todos los metodos de jsPDF
+        const { jsPDF } = window.jspdf;
+    
+        const doc = new jsPDF(); // doc tendra todos los metodos de jsPDF
+        
+        let y = 20; 
+    
+        doc.setFontSize(20);
+    
+        doc.text("                          Figu-ticket de compra" , 20, y);
+    
+        y += 15;
 
-    let y = 20; 
+        // --- AQUÍ AGREGAMOS EL NOMBRE ---
+        doc.setFontSize(12);
+        doc.text(`Cliente: ${nombreGuardado}`, 20, y);
+        doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, y + 6);
 
-    doc.setFontSize(20);
+        y += 5;
 
-    doc.text("Ticket de compra:" , 20, y);
+        doc.text("-------------------------------------------------------------------------------------------------------------------------", 20, y + 10);
+        
+        y += 20; // Dejamos un espacio antes de los productos
+    
+        doc.setFontSize(12);
+    
+        carrito.forEach(producto => {
+    
+            idProductos.push(producto.id); // llenamos el array de ids de productos
+    
+            doc.text(`${producto.nombre} - $${producto.precio}`, 40, y); // texto por cada producto
+    
+            y += 10;
+        });
+        
+        doc.text("-------------------------------------------------------------------------------------------------------------------------", 20, y + 10);
+        y += 25
+        const precioTotal = carrito.reduce((total, producto) => total + parseInt(producto.precio), 0); // calculamos el total del ticket
+    
 
-    y += 20;
+    
+        doc.setFontSize(15);
+    
+        doc.text(`Total: $${precioTotal}`, 20, y);
 
-    doc.setFontSize(12);
+        y += 50;
+        doc.text("                                     --- Gracias por su compra!!! ---", 20, y);
 
-    carrito.forEach(producto => {
+        y+= 10;
+        doc.text("                                                 Figurita Tienda", 20, y)
+    
+    
+    
+        doc.save("ticket.pdf");
 
-        idProductos.push(producto.id); // llenamos el array de ids de productos
-
-        doc.text(`${producto.nombre} - $${producto.precio}`, 40, y); // texto por cada producto
-
-        y += 10;
-    });
-
-    const precioTotal = carrito.reduce((total, producto) => total + parseInt(producto.precio), 0); // calculamos el total del ticket
-
-    y += 5
-
-    doc.setFontSize(15);
-
-    doc.text(`Total: $${precioTotal}`, 20, y);
-
-
-
-    doc.save("ticket.pdf");
+        alert("Compra exitosa!!!");
+        // sessionStorage.removeItem("usuario");
+        sessionStorage.removeItem("carrito");
+        window.location.href = "productos.html";
+    
+        registrarVenta(precioTotal, idProductos);
+    };
+    
 }
 
+function registrarVenta(precioTotal, idProductos) {
+    
+    const fecha = new Date()
+    .toLocaleString("sv-SE", { hour12: false })  
+    .replace("T", " "); // formato de fecha valido para sql horario buenos aires
+
+    const data = {
+        date: fecha,
+        total_precio: precioTotal,
+        nombre: nombre_usuario,
+        productos: idProductos
+    };
+
+
+
+
+}
 
 function init (){
     mostrarCarrito();
