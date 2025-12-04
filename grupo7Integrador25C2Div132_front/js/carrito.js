@@ -29,7 +29,11 @@ function mostrarCarrito(){
     });
 
                         // captura el evento al apretar el boton de vaciar  carrito y ejecuta la funcion
-    cartaCarrito += `</ul> <p class= "precio-total-carrito">Total:  $ ${calcularTotalPrecioCarrito()}</p> <div class="carrito-final"> <button class="botonAgregarCarrito boton-vaciar-carrito" onclick='vaciarCarrito()'> Vaciar carrito </button> <button class="botonAgregarCarrito boton-ticket" onclick='imprimirTicket()'> Imprimir ticket </button></div>`; 
+    cartaCarrito += `</ul> <p class= "precio-total-carrito">Total:  $ ${calcularTotalPrecioCarrito()}</p> 
+    <div class="carrito-final"> 
+        <button class="botonAgregarCarrito boton-vaciar-carrito" onclick='vaciarCarrito()'> Vaciar carrito </button> 
+        <button class="botonAgregarCarrito boton-ticket" onclick='imprimirTicket()'> Finalizar compra </button>
+    </div>`; 
     
     contenedorCarrito.innerHTML = cartaCarrito;
 }
@@ -65,7 +69,6 @@ function calcularTotalPrecioCarrito() {
 };
 
 function imprimirTicket(){
-    console.table(carrito);
     let confirmarCompra = confirm("Confirmar compra??");
 
     if (!confirmarCompra) {
@@ -106,7 +109,7 @@ function imprimirTicket(){
     
         carrito.forEach(producto => {
     
-            idProductos.push(producto.id); // llenamos el array de ids de productos
+            idProductos.push([producto.id, producto.precio]); // llenamos el array de ids de productos
     
             doc.text(`${producto.nombre} - $${producto.precio}`, 40, y); // texto por cada producto
     
@@ -153,6 +156,7 @@ function imprimirTicket(){
             window.location.href = "bienvenida.html"; 
         }
 
+        
     };
     
 }
@@ -168,7 +172,7 @@ async function registrarVenta(precioTotal, idProductos) {
         - Una solución habitual para obtener la hora local en formato ISO 8601 (sin la «Z») es ajustar la fecha según la diferencia horaria antes de llamar a «toISOString()». Esto se puede hacer restando la diferencia horaria en milisegundos (obtenida mediante «getTimezoneOffset () * 60000») del valor de la hora de la fecha. A continuación, la cadena resultante se puede modificar para eliminar la «Z» final si es necesario. Alternativamente, el uso de una configuración regional como «sv» (Suecia) con «toLocaleString()» produce un formato similar al ISO 8601, aunque utiliza un espacio en lugar de «T» entre la fecha y la hora, lo que sigue siendo válido según la RFC 3339.
     */
    // Ya que el formato fecha no es valido para timestamp en SQL, tenemos que formatearlo
-   const fecha = new Date()
+    const fecha = new Date()
     .toLocaleString("sv-SE", { hour12: false })  
     .replace("T", " ");
 
@@ -194,13 +198,11 @@ async function registrarVenta(precioTotal, idProductos) {
         },
         body: JSON.stringify(data)
     });
-    console.log(data);
 
     const result = await response.json();
 
 
     if(response.ok) {
-        console.log(response);
         alert(result.message);
         // // Limpieza de variables en sesion y redireccion para resetear la app
         // sessionStorage.removeItem("usuario");
@@ -209,16 +211,6 @@ async function registrarVenta(precioTotal, idProductos) {
     } else {
         alert(result.message);
     }
-
-
-    // TO DO, tenemos que crear el endpoint /api/sales
-    /*
-    // Una vez que terminasemos de registrar la venta -> ORDEN IDEAL 1. Venta -> 2. Ticket
-    alert("Venta creada con exito");
-    sessionStorage.removeItem("nombreUsuario");
-    // sessionStorage.removeItem("carrito"); // Si guardamos el carrito en session
-    window.location.href = "index.html"
-    */
 }
 
 function init (){

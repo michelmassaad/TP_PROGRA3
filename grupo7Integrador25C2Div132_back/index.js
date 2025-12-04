@@ -3,16 +3,14 @@ const app = express();
 import environments from "./src/api/config/environments.js";
 import cors from "cors"; 
 // Importamos las rutas de producto
-import { productoRoutes, usuarioRoutes } from "./src/api/routes/index.js";
-import productoModels from "./src/api/models/producto.models.js";
+import { productoRoutes, usuarioRoutes, ventasRoutes, vistasRoutes } from "./src/api/routes/index.js";
+
 
 // Importamos la configuracion para trabajar con rutas y archivos estaticos
 import { join, __dirname } from "./src/api/utils/index.js";
 
 import session from "express-session"; // Importamos session despues de instalar npm i express-session
-import { exigirLogin } from "./src/api/middlewares/middlewares.js";
-import connection from "./src/api/database/db.js";
-import bcrypt from "bcrypt";
+
 
 const PORT = environments.port;
 // Importamos session_key de environments
@@ -45,198 +43,17 @@ app.use(session({
 app.set("view engine", "ejs"); // Configuramos EJS como motor de plantillas
 app.set("views", join(__dirname, "src", "views")); // Le indicamos la ruta donde estan las vistas ejs
 
-
-// Devolveremos vistas
-app.get("/admin", exigirLogin, async (req, res) => {
-
-    try {
-        const [rows] = await productoModels.seleccionarProductos();
-        
-        // Le devolvemos la pagina index.ejs
-        res.render("index", {
-            title: "Indice",
-            about: "Lista de productos",
-            productos: rows
-        }); 
-
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-app.get("/consultar", exigirLogin, (req, res) => {
-    res.render("consultar", {
-        title: "Consultar",
-        about: "Consultar producto por id"
-    });
-});
-
-
-app.get("/crear", exigirLogin, (req, res) => {
-    res.render("crear", {
-        title: "Crear",
-        about: "Crear producto"
-    });
-});
-
-
-app.get("/modificar", exigirLogin, (req, res) => {
-    res.render("modificar", {
-        title: "Modificar",
-        about: "Actualizar producto"
-    });
-})
-
-
-app.get("/eliminar", exigirLogin, (req, res) => {
-    res.render("eliminar", {
-        title: "Eliminar",
-        about: "Eliminar producto"
-    });
-})
-
-//Vista de Login
-
-app.get("/login", (req,res) =>{
-    res.render("login",{
-        title:"Login",
-        about:"Inicio de Sesion"
-    })    
-})    
-
-
-app.post("/login", async(req, res) =>{
-    try {
-        const {correo,password} = req.body;
-
-        if(!correo || !password){
-            return res.render("login",{
-                title: "Login",
-                about: "Inicio de Sesion",
-                error: "Todos los campos son obligatorios"
-            });
-        }
-
-        //sentencia antes de bcrypt
-        // const sql = "SELECT * FROM usuarios WHERE correo = ? AND password =?"
-        // const [rows] = await connection.query(sql, [correo, password]);
-
-        //Setup bcrypt parte I
-        // Sentencia con bcrypt, traemos solo el email
-        const sql = "SELECT * FROM usuarios WHERE correo = ? "
-        const [rows] = await connection.query(sql, [correo]);
-
-
-        //Validacion 
-        if (rows.length === 0) {
-            return res.render("login",{
-                title: "Login",
-                about: "Inicio de Sesion",
-                error: "Credenciales incorrectas"
-            });
-        }
-
-        const user = rows[0];
-
-        //Setup bcrypt parte II Comparamos el password hasheado (la contrase;a de login hasheada es igual a la BDD?)
-        const match = await bcrypt.compare(password, user.password) //si ambos hash coinciden, es porque las password son iguales y match devuelve true
-
-        if (match) {
-            //Con el correo y password validos, guardamos la sesion 
-            req.session.user = {
-                id:user.id,
-                nombre:user.nombre,
-                correo:user.correo
-            }
-    
-            res.redirect("/admin"); //redirigimos a la pagina principal
-        }else{
-            return res.render("login",{
-                title: "Login",
-                about: "Inicio de Sesion",
-                error: "Password incorrecta"
-            });
-        }
-
-    } catch (error) {
-        console.error("Error en el login",error);
-        
-    }
-})
-
-
-//Creamos el endpoint para destruir la sesion y redireccionar
-
-app.post("/logout", (req,res) =>{
-
-    // Destruimos la sesion
-    req.session.destroy((err)=>{
-        if (err) {
-            
-            // En caso de existir algun error, mandaremos una respuesta error
-            console.log("Error al destruir la sesion", err);
-            
-            return res.status(500).json({
-                error:"Error al cerrar la sesion"
-            });
-        }
-       // Redirecciono al login principal
-        res.redirect("/login");
-        
-    })
-})
-
-
-// Endpoint para crear ventas
-app.post("/api/ventas", async (req, res) => {
-    try {
-        // Recibimos los datos del cuerpo de la peticion HTTP
-        let { fecha, total, nombre_usuario, productos } = req.body;
-
-        // Validacion de datos obligatorios
-        if(!fecha || !total || !nombre_usuario || !Array.isArray(productos)) {
-            return res.status(400).json({
-                message: "Datos invalidos, debes enviar fecha, total, nombre_usuario y productos (array)"
-            });
-        }
-
-        // 1. Insertar la venta en la tabla "sales"
-        const sqlVenta = "INSERT INTO ventas (fecha, total, nombre_usuario) VALUES (?, ?, ?)";
-        const [ventaResult] = await connection.query(sqlVenta, [fecha, total, nombre_usuario]);
-
-        // 2. Obtenemos el id de la venta recien creada
-        const ventaId = ventaResult.insertId;
-
-        // 3. Insertamos los productos en "product_sales"
-        const sqlProductoVenta = "INSERT INTO ventas_productos (producto_id, venta_id) VALUES (?, ?)";
-
-        // Como tenemos una relacion N a N, debemos insertar una fila por cada producto vendido
-        for (const productoId of productos) {
-            await connection.query(sqlProductoVenta, [productoId, ventaId]);
-        }
-
-        // Respuesta de exito
-        res.status(201).json({
-            message: "Venta registrada con exito!"
-        });
-
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: "Error interno del servidor",
-            error: error.message
-        })
-    }
-})
-
+// las rutas de las vistas las gestiona Router
+app.use("/", vistasRoutes);
 
 // Ahora las rutas las gestiona el middleware Router
 app.use("/api/productos", productoRoutes);
 
-// Rutas usuario
-app.use("/api/usuarios", usuarioRoutes);
+// Rutas usuario y login
+app.use("/", usuarioRoutes);
 
+// Rutas ventas
+app.use("/api/ventas", ventasRoutes);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);

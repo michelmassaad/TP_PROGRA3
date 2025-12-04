@@ -27,7 +27,7 @@ function actualizarContador() {
 }
 
 function cerrarSesion() {
-    const confirmar = confirm("Seguro quieres volver? Se vaciara tu carrito");
+    const confirmar = confirm("Seguro quieres salir? Se perderan los datos de tu sesion");
 
     if (confirmar) {
         // esto elimina cualquier cosa guardada en la session
