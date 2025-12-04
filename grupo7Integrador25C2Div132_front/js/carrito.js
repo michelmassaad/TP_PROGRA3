@@ -5,7 +5,7 @@ function mostrarCarrito(){
     let cartaCarrito = "";
 
     if (carrito.length === 0) {
-        contenedorCarrito.innerHTML = `<div class="carrito-vacio"><h2>Tu carrito está vacío!!</h2> <a href="productos.html">Ver Productos..</a></div>`; // innerHTML convierte un string en HTML
+        contenedorCarrito.innerHTML = `<div class="carrito-vacio"><h3>Aún no has agregado jugadores ni sobres a tu carrito!!</h3> <a href="productos.html">Ver Productos...</a></div>`;
         return;
     }
 
@@ -13,7 +13,7 @@ function mostrarCarrito(){
         cartaCarrito += 
         `
         <div class="carta-producto carta-carrito">
-            <div class="carta-imagen">
+            <div class="carta-imagen carta-imagen-carrito">
                 <img src="${item.img_url}" alt="${item.nombre}">
             </div>
             <div class="carta-texto carta-texto-carrito">
@@ -127,38 +127,98 @@ function imprimirTicket(){
         doc.text("                                     --- Gracias por su compra!!! ---", 20, y);
 
         y+= 10;
-        doc.text("                                                 Figurita Tienda", 20, y)
+        doc.text("                                                 Figurita Store", 20, y)
     
-    
-    
-        doc.save("ticket.pdf");
-
-        alert("Compra exitosa!!!");
-        // sessionStorage.removeItem("usuario");
-        sessionStorage.removeItem("carrito");
-        window.location.href = "productos.html";
     
         registrarVenta(precioTotal, idProductos);
+    
+        doc.save("Figu-ticket.pdf");
+
+        // alert("Compra exitosa!!!");
+        // //podriamos hacer un alert que diga seguir comprando o salir
+        // // sessionStorage.removeItem("usuario");
+        // sessionStorage.setItem("carrito", JSON.stringify([]));
+        // // vaciarCarrito();
+        // window.location.href = "productos.html";
+        
+        const seguirComprando = confirm("¡Compra exitosa! 🥳\n\n¿Quieres seguir comprando?\n(Aceptar = Sí, Cancelar = Salir y cerrar sesión)");
+
+        if (seguirComprando) {
+            // Opción A: Vuelve a la tienda con la misma sesión
+            sessionStorage.setItem("carrito", JSON.stringify([]));
+            window.location.href = "productos.html";
+        } else {
+            // Opción B: Cierra sesión y va al inicio
+            sessionStorage.clear();
+            window.location.href = "bienvenida.html"; 
+        }
+
     };
     
 }
 
-function registrarVenta(precioTotal, idProductos) {
-    
-    const fecha = new Date()
+async function registrarVenta(precioTotal, idProductos) {
+
+    /* toLocaleString vs toISOString
+
+        - Los métodos `toLocaleString()` y `toISOString()` de JavaScript tienen diferentes propósitos a la hora de convertir un objeto Date en una cadena. El método `toISOString()` siempre devuelve una cadena en formato ISO 8601, que representa la fecha y la hora en UTC (tiempo universal coordinado) e incluye una «Z» al final para indicar UTC. Este formato está estandarizado y es coherente independientemente de la configuración del sistema del usuario.
+
+        - Por el contrario, `toLocaleString()` devuelve una cadena formateada según la configuración regional y la zona horaria del sistema del usuario o según lo especificado por los parámetros del método. Esto significa que el resultado puede variar significativamente en función de la ubicación del usuario, por ejemplo, utilizando diferentes separadores de fecha, formatos de hora o incluso diferentes nombres de días y meses. Por ejemplo, si se utiliza la configuración regional «de» (alemán), la fecha se formateará como «29.5.2020, 18:04:24», mientras que «fr» (francés) utilizará «29/05/2020, 18:04:24».
+
+        - Una solución habitual para obtener la hora local en formato ISO 8601 (sin la «Z») es ajustar la fecha según la diferencia horaria antes de llamar a «toISOString()». Esto se puede hacer restando la diferencia horaria en milisegundos (obtenida mediante «getTimezoneOffset () * 60000») del valor de la hora de la fecha. A continuación, la cadena resultante se puede modificar para eliminar la «Z» final si es necesario. Alternativamente, el uso de una configuración regional como «sv» (Suecia) con «toLocaleString()» produce un formato similar al ISO 8601, aunque utiliza un espacio en lugar de «T» entre la fecha y la hora, lo que sigue siendo válido según la RFC 3339.
+    */
+   // Ya que el formato fecha no es valido para timestamp en SQL, tenemos que formatearlo
+   const fecha = new Date()
     .toLocaleString("sv-SE", { hour12: false })  
-    .replace("T", " "); // formato de fecha valido para sql horario buenos aires
+    .replace("T", " ");
 
+    console.log(fecha);
+
+    const nombreCliente = sessionStorage.getItem("usuario");
+            // Primera mayúscula + resto en minúscula
+    nombreUsuario = nombreCliente.charAt(0).toUpperCase() + nombreCliente.slice(1).toLowerCase();
+            
+
+    // Construimos el objeto con informacion para mandarle al endpoint (previo parseo a JSON)
     const data = {
-        date: fecha,
-        total_precio: precioTotal,
-        nombre: nombre_usuario,
+        fecha: fecha, // Recordar que si en su BBDD tienen un valor generado automaticamente, no hace falta enviar esto
+        total: precioTotal,
+        nombre_usuario: nombreUsuario,
         productos: idProductos
-    };
+    }
+
+    const response = await fetch("http://localhost:3000/api/ventas", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+    console.log(data);
+
+    const result = await response.json();
 
 
+    if(response.ok) {
+        console.log(response);
+        alert(result.message);
+        // // Limpieza de variables en sesion y redireccion para resetear la app
+        // sessionStorage.removeItem("usuario");
+        // // sessionStorage.removeItem("carrito"); // Si guardamos el carrito en session
+        // window.location.href = "bienvenida.html"
+    } else {
+        alert(result.message);
+    }
 
 
+    // TO DO, tenemos que crear el endpoint /api/sales
+    /*
+    // Una vez que terminasemos de registrar la venta -> ORDEN IDEAL 1. Venta -> 2. Ticket
+    alert("Venta creada con exito");
+    sessionStorage.removeItem("nombreUsuario");
+    // sessionStorage.removeItem("carrito"); // Si guardamos el carrito en session
+    window.location.href = "index.html"
+    */
 }
 
 function init (){

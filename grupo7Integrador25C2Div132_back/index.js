@@ -186,6 +186,51 @@ app.post("/logout", (req,res) =>{
     })
 })
 
+
+// Endpoint para crear ventas
+app.post("/api/ventas", async (req, res) => {
+    try {
+        // Recibimos los datos del cuerpo de la peticion HTTP
+        let { fecha, total, nombre_usuario, productos } = req.body;
+
+        // Validacion de datos obligatorios
+        if(!fecha || !total || !nombre_usuario || !Array.isArray(productos)) {
+            return res.status(400).json({
+                message: "Datos invalidos, debes enviar fecha, total, nombre_usuario y productos (array)"
+            });
+        }
+
+        // 1. Insertar la venta en la tabla "sales"
+        const sqlVenta = "INSERT INTO ventas (fecha, total, nombre_usuario) VALUES (?, ?, ?)";
+        const [ventaResult] = await connection.query(sqlVenta, [fecha, total, nombre_usuario]);
+
+        // 2. Obtenemos el id de la venta recien creada
+        const ventaId = ventaResult.insertId;
+
+        // 3. Insertamos los productos en "product_sales"
+        const sqlProductoVenta = "INSERT INTO ventas_productos (producto_id, venta_id) VALUES (?, ?)";
+
+        // Como tenemos una relacion N a N, debemos insertar una fila por cada producto vendido
+        for (const productoId of productos) {
+            await connection.query(sqlProductoVenta, [productoId, ventaId]);
+        }
+
+        // Respuesta de exito
+        res.status(201).json({
+            message: "Venta registrada con exito!"
+        });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Error interno del servidor",
+            error: error.message
+        })
+    }
+})
+
+
 // Ahora las rutas las gestiona el middleware Router
 app.use("/api/productos", productoRoutes);
 

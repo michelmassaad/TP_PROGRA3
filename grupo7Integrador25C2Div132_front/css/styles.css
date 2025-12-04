@@ -294,7 +294,15 @@ h1{
 .carta-carrito{
     height: auto !important;
     flex-direction: row !important;
-    width: 300px;
+    width: 330px;
+}
+
+.carta-imagen-carrito{
+    padding: 0 !important;
+}
+
+.carta-texto-carrito{
+    width: 140% !important;
 }
 .carta-id-precio-carrito{
     flex-direction: column-reverse !important;
@@ -546,7 +554,7 @@ h1{
     justify-content: space-evenly;
     border-radius: 15px;
     font-size: 15px;
-    padding: 20px;
+    padding: 30px;
     backdrop-filter: blur(1px);
     /* background-color: rgba(255, 255, 255, 0.2); */
     background-color: #1a1a1a;  /* Color de fondo oscuro (azul noche) */
@@ -568,7 +576,7 @@ h1{
     background-color: #51b1a3; /* Tu color turquesa */
     color: black;
     font-weight: bold;
-
+    margin-top: 15px;
 }
 
 .carrito-vacio a:hover {
